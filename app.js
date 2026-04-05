@@ -87,19 +87,22 @@
   }
 
   function equalizeSummaryLabelHeights() {
-    const labels = summaryTable.querySelectorAll(".summary-table__label");
-    if (!labels.length) {
-      return;
-    }
-    labels.forEach(function (el) {
-      el.style.height = "";
-    });
-    var maxH = 0;
-    labels.forEach(function (el) {
-      maxH = Math.max(maxH, el.getBoundingClientRect().height);
-    });
-    labels.forEach(function (el) {
-      el.style.height = maxH + "px";
+    const rows = summaryTable.querySelectorAll("tbody tr");
+    rows.forEach(function (tr) {
+      const labels = tr.querySelectorAll(".summary-table__label");
+      if (!labels.length) {
+        return;
+      }
+      labels.forEach(function (el) {
+        el.style.height = "";
+      });
+      var maxH = 0;
+      labels.forEach(function (el) {
+        maxH = Math.max(maxH, el.getBoundingClientRect().height);
+      });
+      labels.forEach(function (el) {
+        el.style.height = maxH + "px";
+      });
     });
   }
 

@@ -199,9 +199,10 @@ textarea {
   font-size: 0.68rem;
   line-height: 1.25;
   color: #303030;
-  background: #e7e7e7;
-  padding: 0.35rem 0.35rem;
+  background: #e8eaec;
+  padding: 0.4rem 0.35rem;
   border-bottom: 1px solid var(--border);
+  min-height: 2.25rem;
 }
 
 .summary-table__value {
