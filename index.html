@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dairy Harvest Worksheet</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Dairy Harvest Worksheet</h1>
+    <p class="lede">Record field and pile data; packing weight per ton per hour is calculated using entries.</p>
+  </header>
+
+  <main>
+    <form id="dairy-form" class="dairy-form" novalidate>
+      <fieldset class="form-section">
+        <legend>Record Metadata</legend>
+        <p class="field">
+          <label for="timestamp">Timestamp (auto)</label>
+          <input type="text" id="timestamp" name="timestamp" readonly />
+        </p>
+        <p class="field">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </p>
+        <p class="field">
+          <label for="farmName">Farm name</label>
+          <input type="text" id="farmName" name="farmName" required />
+        </p>
+        <p class="field">
+          <label for="recordDate">Date</label>
+          <input type="date" id="recordDate" name="recordDate" required />
+        </p>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend>Field</legend>
+        <p class="field">
+          <label for="fieldName">Field name</label>
+          <input type="text" id="fieldName" name="fieldName" required />
+        </p>
+        <p class="field">
+          <label for="truck1Fill">Truck 1 fill time</label>
+          <input type="text" id="truck1Fill" name="truck1Fill" required />
+        </p>
+        <p class="field">
+          <label for="truck2Fill">Truck 2 fill time</label>
+          <input type="text" id="truck2Fill" name="truck2Fill" required />
+        </p>
+        <p class="field">
+          <label for="avgTonsPerLoad">Average tons of silage per truck load</label>
+          <input type="number" id="avgTonsPerLoad" name="avgTonsPerLoad" required min="0" step="any" />
+        </p>
+        <p class="field">
+          <label for="fieldNotes">Other field notes <span class="optional">(optional)</span></label>
+          <textarea id="fieldNotes" name="fieldNotes" rows="3"></textarea>
+        </p>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend>Silage Pile</legend>
+        <p class="field">
+          <label for="pileLocation">Silage pile name or location</label>
+          <input type="text" id="pileLocation" name="pileLocation" required />
+        </p>
+        <p class="field">
+          <label for="trucksPerHour">Trucks delivered to pile per hour</label>
+          <input type="number" id="trucksPerHour" name="trucksPerHour" required min="0" step="any" />
+        </p>
+        <p class="field">
+          <label for="packingTractors">Number of packing tractors</label>
+          <input type="number" id="packingTractors" name="packingTractors" required min="0" step="1" />
+        </p>
+        <p class="field">
+          <label for="pileNotes">Other notes about the silage pile</label>
+          <textarea id="pileNotes" name="pileNotes" rows="3"></textarea>
+        </p>
+      </fieldset>
+
+      <div class="form-actions">
+        <button type="submit" class="btn primary">Generate table</button>
+        <button type="reset" class="btn secondary">Clear form</button>
+      </div>
+    </form>
+
+    <section id="results-section" class="results-section hidden" aria-live="polite">
+      <h2>Record summary</h2>
+      <div id="export-target" class="export-target">
+        <table id="summary-table" class="summary-table">
+          <caption class="table-caption">Dairy Harvest Entry</caption>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="export-actions">
+        <button type="button" id="btn-pdf" class="btn primary">Export PDF</button>
+        <button type="button" id="btn-png" class="btn secondary">Export PNG</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>
