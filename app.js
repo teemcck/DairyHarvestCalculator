@@ -151,7 +151,7 @@
     );
 
     const rows = [
-      ["Timestamp", timestampInput.value],
+      ["Entry Timestamp", timestampInput.value],
       ["Email address", getStr("email")],
       ["Farm name", getStr("farmName")],
       ["Date", getStr("recordDate")],
