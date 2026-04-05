@@ -63,66 +63,26 @@
     return value === "" || value == null ? "—" : String(value);
   }
 
-  function summaryCell(label, value) {
+  function summaryRow(label, value) {
+    const tr = document.createElement("tr");
+    const th = document.createElement("th");
+    th.scope = "row";
+    th.className = "summary-table__label";
+    th.textContent = label;
     const td = document.createElement("td");
-    td.className = "summary-table__cell";
-    const labEl = document.createElement("div");
-    labEl.className = "summary-table__label";
-    labEl.textContent = label;
-    const valEl = document.createElement("div");
-    valEl.className = "summary-table__value";
-    valEl.textContent = displayCell(value);
-    td.appendChild(labEl);
-    td.appendChild(valEl);
-    return td;
+    td.className = "summary-table__value";
+    td.textContent = displayCell(value);
+    tr.appendChild(th);
+    tr.appendChild(td);
+    return tr;
   }
 
-  var SUMMARY_COLS = 4;
-
-  function emptySummaryCell() {
-    const td = document.createElement("td");
-    td.className = "summary-table__cell summary-table__cell--empty";
-    td.setAttribute("aria-hidden", "true");
-    return td;
-  }
-
-  function equalizeSummaryLabelHeights() {
-    const rows = summaryTable.querySelectorAll("tbody tr");
-    rows.forEach(function (tr) {
-      const labels = tr.querySelectorAll(".summary-table__label");
-      if (!labels.length) {
-        return;
-      }
-      labels.forEach(function (el) {
-        el.style.height = "";
-      });
-      var maxH = 0;
-      labels.forEach(function (el) {
-        maxH = Math.max(maxH, el.getBoundingClientRect().height);
-      });
-      labels.forEach(function (el) {
-        el.style.height = maxH + "px";
-      });
-    });
-  }
-
-  function renderFourColumnGrid(fieldRows) {
+  function renderSummaryTable(fieldRows) {
     tableBody.innerHTML = "";
-    for (var i = 0; i < fieldRows.length; i += SUMMARY_COLS) {
-      const tr = document.createElement("tr");
-      for (var c = 0; c < SUMMARY_COLS; c++) {
-        const item = fieldRows[i + c];
-        if (item) {
-          tr.appendChild(summaryCell(item[0], item[1]));
-        } else {
-          tr.appendChild(emptySummaryCell());
-        }
-      }
-      tableBody.appendChild(tr);
+    for (var i = 0; i < fieldRows.length; i++) {
+      const item = fieldRows[i];
+      tableBody.appendChild(summaryRow(item[0], item[1]));
     }
-    requestAnimationFrame(function () {
-      requestAnimationFrame(equalizeSummaryLabelHeights);
-    });
   }
 
   form.addEventListener("reset", function () {
@@ -172,7 +132,7 @@
       ],
     ];
 
-    renderFourColumnGrid(rows);
+    renderSummaryTable(rows);
 
     resultsSection.classList.remove("hidden");
     resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -196,7 +156,6 @@
       alert("Image/PDF export library failed to load. Check your network and refresh.");
       return Promise.reject(new Error("html2canvas missing"));
     }
-    equalizeSummaryLabelHeights();
     return html2canvas(exportTarget, {
       scale: 2,
       useCORS: true,

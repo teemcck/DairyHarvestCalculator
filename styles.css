@@ -179,34 +179,29 @@ textarea {
   padding-bottom: 0.6rem;
 }
 
-.summary-table__cell {
-  width: 25%;
-  vertical-align: top;
-  padding: 0;
-  border: 1px solid var(--border);
-  background: #fff;
-}
-
-.summary-table__cell--empty {
-  background: #fafafa;
-}
-
 .summary-table__label {
   box-sizing: border-box;
-  display: flex;
-  align-items: flex-start;
+  width: 38%;
+  vertical-align: top;
+  text-align: left;
   font-weight: 600;
-  font-size: 0.68rem;
-  line-height: 1.25;
+  font-size: 0.75rem;
+  line-height: 1.35;
   color: #303030;
   background: #e8eaec;
-  padding: 0.4rem 0.35rem;
-  border-bottom: 1px solid var(--border);
-  min-height: 2.25rem;
+  padding: 0.45rem 0.5rem;
+  border: 1px solid var(--border);
+}
+
+.summary-table__label::after {
+  content: ":";
 }
 
 .summary-table__value {
-  padding: 0.4rem 0.3rem;
+  vertical-align: top;
+  padding: 0.45rem 0.5rem;
+  border: 1px solid var(--border);
+  background: #fff;
   word-break: break-word;
   overflow-wrap: anywhere;
 }
