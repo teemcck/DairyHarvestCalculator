@@ -161,6 +161,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 1rem;
+  padding-bottom: 4rem;
   margin-bottom: 1rem;
 }
 
@@ -168,7 +169,7 @@ textarea {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: 0.9rem;
+  font-size: 0.78rem;
 }
 
 .table-caption {
@@ -179,9 +180,9 @@ textarea {
 }
 
 .summary-table__cell {
-  width: 33.33%;
+  width: 25%;
   vertical-align: top;
-  padding: 0.45rem 0.5rem;
+  padding: 0;
   border: 1px solid var(--border);
   background: #fff;
 }
@@ -191,14 +192,22 @@ textarea {
 }
 
 .summary-table__label {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.68rem;
+  line-height: 1.25;
   color: #303030;
-  margin-bottom: 0.25rem;
+  background: #e7e7e7;
+  padding: 0.35rem 0.35rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .summary-table__value {
+  padding: 0.4rem 0.3rem;
   word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .export-actions {

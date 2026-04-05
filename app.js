@@ -4,7 +4,8 @@
   const form = document.getElementById("dairy-form");
   const timestampInput = document.getElementById("timestamp");
   const resultsSection = document.getElementById("results-section");
-  const tableBody = document.querySelector("#summary-table tbody");
+  const summaryTable = document.getElementById("summary-table");
+  const tableBody = summaryTable.querySelector("tbody");
   const exportTarget = document.getElementById("export-target");
   const btnPdf = document.getElementById("btn-pdf");
   const btnPng = document.getElementById("btn-png");
@@ -76,6 +77,8 @@
     return td;
   }
 
+  var SUMMARY_COLS = 4;
+
   function emptySummaryCell() {
     const td = document.createElement("td");
     td.className = "summary-table__cell summary-table__cell--empty";
@@ -83,11 +86,28 @@
     return td;
   }
 
-  function renderThreeColumnRows(fieldRows) {
+  function equalizeSummaryLabelHeights() {
+    const labels = summaryTable.querySelectorAll(".summary-table__label");
+    if (!labels.length) {
+      return;
+    }
+    labels.forEach(function (el) {
+      el.style.height = "";
+    });
+    var maxH = 0;
+    labels.forEach(function (el) {
+      maxH = Math.max(maxH, el.getBoundingClientRect().height);
+    });
+    labels.forEach(function (el) {
+      el.style.height = maxH + "px";
+    });
+  }
+
+  function renderFourColumnGrid(fieldRows) {
     tableBody.innerHTML = "";
-    for (var i = 0; i < fieldRows.length; i += 3) {
+    for (var i = 0; i < fieldRows.length; i += SUMMARY_COLS) {
       const tr = document.createElement("tr");
-      for (var c = 0; c < 3; c++) {
+      for (var c = 0; c < SUMMARY_COLS; c++) {
         const item = fieldRows[i + c];
         if (item) {
           tr.appendChild(summaryCell(item[0], item[1]));
@@ -97,6 +117,9 @@
       }
       tableBody.appendChild(tr);
     }
+    requestAnimationFrame(function () {
+      requestAnimationFrame(equalizeSummaryLabelHeights);
+    });
   }
 
   form.addEventListener("reset", function () {
@@ -146,7 +169,7 @@
       ],
     ];
 
-    renderThreeColumnRows(rows);
+    renderFourColumnGrid(rows);
 
     resultsSection.classList.remove("hidden");
     resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -170,6 +193,7 @@
       alert("Image/PDF export library failed to load. Check your network and refresh.");
       return Promise.reject(new Error("html2canvas missing"));
     }
+    equalizeSummaryLabelHeights();
     return html2canvas(exportTarget, {
       scale: 2,
       useCORS: true,
