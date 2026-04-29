@@ -149,10 +149,10 @@
       ["Date", getStr("recordDate")],
       ["Field name", getStr("fieldName")],
       [
-        "Average fill time",
+        "Average Fill Time in Minutes",
         averageFillTime == null
           ? "Cannot compute (enter numeric values for both truck fill times)"
-          : formatAverageFillTime(averageFillTime) + " minutes",
+          : formatAverageFillTime(averageFillTime),
       ],
       ["Average tons of silage per truck load", avgTons],
       [
@@ -162,12 +162,12 @@
           : recommendedApplicatorSetting,
       ],
       ["Other field notes", getStr("fieldNotes")],
-      ["Silage pile name or location", getStr("pileLocation")],
-      ["Trucks delivered to pile per hour", trucksPerHour],
-      ["Number of packing tractors", packingTractors],
-      ["Other notes about the silage pile", getStr("pileNotes")],
+      ["Silage Pile Name or Location", getStr("pileLocation")],
+      ["Trucks Delivered to Pile per Hour", trucksPerHour],
+      ["Number of Packing Tractors", packingTractors],
+      ["Other Notes About the Silage Pile", getStr("pileNotes")],
       [
-        "Packing weight per ton, per hour",
+        "Packing Weight per Ton, per Hour",
         packingWeight == null
           ? "Cannot compute (need trucks/hour > 0 and avg tons/load > 0)"
           : packingWeight,
