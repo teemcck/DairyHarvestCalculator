@@ -51,6 +51,31 @@
     return document.getElementById(id).value.trim();
   }
 
+  function computeAverageFillTime(fill1, fill2) {
+    if (!Number.isFinite(fill1) || !Number.isFinite(fill2)) {
+      return null;
+    }
+    return (fill1 + fill2) / 2;
+  }
+
+  function formatAverageFillTime(value) {
+    if (!Number.isFinite(value)) {
+      return "";
+    }
+    return Number.isInteger(value) ? String(value) : String(Number(value.toFixed(2)));
+  }
+
+  function computeRecommendedApplicatorSetting(avgTonsPerLoad, averageFillTime) {
+    if (
+      !Number.isFinite(avgTonsPerLoad) ||
+      !Number.isFinite(averageFillTime) ||
+      averageFillTime <= 0
+    ) {
+      return null;
+    }
+    return Math.ceil(avgTonsPerLoad / averageFillTime);
+  }
+
   function computePackingWeightPerTonPerHour(packingTractors, trucksPerHour, avgTonsPerLoad) {
     const denom = trucksPerHour * avgTonsPerLoad;
     if (!Number.isFinite(packingTractors) || !Number.isFinite(denom) || denom <= 0) {
@@ -100,9 +125,16 @@
       return;
     }
 
+    const truck1Fill = getNum("truck1Fill");
+    const truck2Fill = getNum("truck2Fill");
     const avgTons = getNum("avgTonsPerLoad");
     const trucksPerHour = getNum("trucksPerHour");
     const packingTractors = getNum("packingTractors");
+    const averageFillTime = computeAverageFillTime(truck1Fill, truck2Fill);
+    const recommendedApplicatorSetting = computeRecommendedApplicatorSetting(
+      avgTons,
+      averageFillTime
+    );
 
     const packingWeight = computePackingWeightPerTonPerHour(
       packingTractors,
@@ -116,9 +148,19 @@
       ["Farm name", getStr("farmName")],
       ["Date", getStr("recordDate")],
       ["Field name", getStr("fieldName")],
-      ["Truck 1 fill time", getStr("truck1Fill")],
-      ["Truck 2 fill time", getStr("truck2Fill")],
+      [
+        "Average fill time",
+        averageFillTime == null
+          ? "Cannot compute (enter numeric values for both truck fill times)"
+          : formatAverageFillTime(averageFillTime) + " minutes",
+      ],
       ["Average tons of silage per truck load", avgTons],
+      [
+        "Recommended Applicator Setting",
+        recommendedApplicatorSetting == null
+          ? "Cannot compute (need avg tons/load and average fill time > 0)"
+          : recommendedApplicatorSetting,
+      ],
       ["Other field notes", getStr("fieldNotes")],
       ["Silage pile name or location", getStr("pileLocation")],
       ["Trucks delivered to pile per hour", trucksPerHour],
